@@ -3,14 +3,16 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
-const personRoutes = require('./routes/personRoutes');
+// const personRoutes = require('./routes/personRoutes');
 const typeRoutes = require('./routes/typeRoutes');
+const pokemonRoutes = require('./routes/pokemonRoutes');
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/', personRoutes);
+// app.use('/', personRoutes);
 app.use('/', typeRoutes);
+app.use('/', pokemonRoutes);
 
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
