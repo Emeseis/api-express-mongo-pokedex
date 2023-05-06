@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const Pokemon = require('../models/Pokemon');
 
-router.post('/pokemon', async (req, res) => {
-  const { id, entry, name, sprite, types, gen } = req.body;
-  const pokemon = { id, entry, name, sprite, types, gen };
+// router.post('/pokemon', async (req, res) => {
+//   const { id, entry, name, sprite, types, gen } = req.body;
+//   const pokemon = { id, entry, name, sprite, types, gen };
 
-  try {
-    await Pokemon.create(pokemon);
-    res.status(201).json({ msg: 'Pokemon successfully added' });
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-});
+//   try {
+//     await Pokemon.create(pokemon);
+//     res.status(201).json({ msg: 'Pokemon successfully added' });
+//   } catch (err) {
+//     res.status(500).json({ error: err });
+//   }
+// });
 
 router.post('/pokemons', async (req, res) => { 
   let query = {}; 
@@ -57,24 +57,24 @@ router.get('/pokemon/:id', async (req, res) => {
   }
 });
 
-router.put('/pokemon', async (req, res) => {
-  const { id, entry } = req.body;
-  try {
-    await Pokemon.updateOne({ id }, { entry });
-    res.status(201).json({ msg: 'Pokemon successfully updated' });
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-});
+// router.put('/pokemon', async (req, res) => {
+//   const { id, entry } = req.body;
+//   try {
+//     await Pokemon.updateOne({ id }, { entry });
+//     res.status(201).json({ msg: 'Pokemon successfully updated' });
+//   } catch (err) {
+//     res.status(500).json({ error: err });
+//   }
+// });
 
-router.delete('/pokemon/:id', async (req, res) => {
-  const id = req.params.id;
-  try {
-    await Pokemon.deleteOne({ id });
-    res.status(201).json({ msg: 'Pokemon successfully deleted' });
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-});
+// router.delete('/pokemon/:id', async (req, res) => {
+//   const id = req.params.id;
+//   try {
+//     await Pokemon.deleteOne({ id });
+//     res.status(201).json({ msg: 'Pokemon successfully deleted' });
+//   } catch (err) {
+//     res.status(500).json({ error: err });
+//   }
+// });
 
 module.exports = router;
