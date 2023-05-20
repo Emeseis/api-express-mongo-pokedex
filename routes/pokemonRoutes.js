@@ -1,18 +1,6 @@
 const router = require('express').Router();
 const Pokemon = require('../models/Pokemon');
 
-// router.post('/pokemon', async (req, res) => {
-//   const { id, entry, name, sprite, types, gen } = req.body;
-//   const pokemon = { id, entry, name, sprite, types, gen };
-
-//   try {
-//     await Pokemon.create(pokemon);
-//     res.status(201).json({ msg: 'Pokemon successfully added' });
-//   } catch (err) {
-//     res.status(500).json({ error: err });
-//   }
-// });
-
 router.post('/pokemons', async (req, res) => { 
   let query = {}; 
 
@@ -22,7 +10,8 @@ router.post('/pokemons', async (req, res) => {
   if (type != 'All') query.types = { $elemMatch: { "type.name": type  } };
   if (name) query.name = { $regex: new RegExp(name.trim(), "i") };
 
-  // if (from && to)  query.id = { $gte: from, $lte: to };  // filtros não estão mais sendo usados
+  // filtros de from e to não estão mais sendo utilizados
+  // if (from && to)  query.id = { $gte: from, $lte: to };  
   // if (from && !to) query.id = { $gte: from };
   // if (!from && to) query.id = { $lte: to };
 
@@ -56,6 +45,18 @@ router.get('/pokemon/:id', async (req, res) => {
     res.status(500).json({ error: err });
   }
 });
+
+// router.post('/pokemon', async (req, res) => {
+//   const { id, entry, name, sprite, types, gen } = req.body;
+//   const pokemon = { id, entry, name, sprite, types, gen };
+
+//   try {
+//     await Pokemon.create(pokemon);
+//     res.status(201).json({ msg: 'Pokemon successfully added' });
+//   } catch (err) {
+//     res.status(500).json({ error: err });
+//   }
+// });
 
 // router.put('/pokemon', async (req, res) => {
 //   const { id, entry } = req.body;
