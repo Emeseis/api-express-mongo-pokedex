@@ -1,0 +1,14 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+# não consegui fazer funcionar no space
+v: 0
+micros:
+  - name: api-express-mongo
+    src: ./
+    engine: nodejs16
+    presets:
+      env:
+        - name: DB_USER
+          default: ***REMOVED***
+        - name: DB_PASS
+          default: ***REMOVED***
+    primary: true
