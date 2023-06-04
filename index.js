@@ -23,3 +23,5 @@ mongoose
   .connect(`mongodb+srv://${DB_USER}:${DB_PASS}@cluster-api.qt8ysip.mongodb.net/database?retryWrites=true&w=majority`)
   .then(() => { console.log('Database successfully connected'); app.listen(4000); })
   .catch((err) => console.log(err));
+
+export default app;
