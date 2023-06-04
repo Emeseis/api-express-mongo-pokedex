@@ -24,4 +24,4 @@ mongoose
   .then(() => { console.log('Database successfully connected'); app.listen(4000); })
   .catch((err) => console.log(err));
 
-export default app;
+module.exports = app;
