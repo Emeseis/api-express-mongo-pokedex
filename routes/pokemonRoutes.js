@@ -1,19 +1,16 @@
-const router = require('express').Router();
-const Pokemon = require('../models/Pokemon');
+import express from 'express';
+import Pokemon from '../models/Pokemon.js';
+
+const router = express.Router();
 
 router.post('/pokemons', async (req, res) => { 
   let query = {}; 
 
-  const { name, order, gen, type, from, to } = req.body;
+  const { name, order, gen, type } = req.body;
 
-  if (gen != 'All') query.gen = gen;
-  if (type != 'All') query.types = { $elemMatch: { "type.name": type  } };
   if (name) query.name = { $regex: new RegExp(name.trim(), "i") };
-
-  // filtros de from e to não estão mais sendo utilizados
-  // if (from && to)  query.id = { $gte: from, $lte: to };  
-  // if (from && !to) query.id = { $gte: from };
-  // if (!from && to) query.id = { $lte: to };
+  if (type != 'All') query.types = { $elemMatch: { "type.name": type  } };
+  if (gen != 'All') query.gen = gen;
 
   try {
     const pokemons = await Pokemon.find(query).sort({ id: order });
@@ -25,7 +22,6 @@ router.post('/pokemons', async (req, res) => {
 
 router.get('/pokedex/:gen', async (req, res) => {
   const gen = req.params.gen;
-
   try {
     const pokemon = await Pokemon.find({ gen });
     res.status(200).json(pokemon);
@@ -35,12 +31,11 @@ router.get('/pokedex/:gen', async (req, res) => {
 });
 
 router.get('/pokemon/:id', async (req, res) => {
-  const id = req.params.id;
-  
+  const id = req.params.id;  
   try {
     const pokemon = await Pokemon.findOne({ id });
-    if (!pokemon) { res.status(422).json({ msg: 'Pokemon not found' }); return; }
-    res.status(200).json(pokemon);
+    if (!pokemon) res.status(422).json({ msg: 'Pokemon not found' });     
+    else res.status(200).json(pokemon);
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -78,4 +73,4 @@ router.get('/pokemon/:id', async (req, res) => {
 //   }
 // });
 
-module.exports = router;
+export default router;
