@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const Type = mongoose.model('Type', {
+const typeSchema = new mongoose.Schema({
   name: String,
   attack: {
     double: Array,
@@ -14,4 +14,6 @@ const Type = mongoose.model('Type', {
   }
 });
 
-module.exports = Type;
+const Type = mongoose.model('Type', typeSchema);
+
+export default Type;
