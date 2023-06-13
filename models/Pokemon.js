@@ -9,6 +9,4 @@ const pokemonSchema = new mongoose.Schema({
   gen: Number
 });
 
-const Pokemon = mongoose.model('Pokemon', pokemonSchema);
-
-export default Pokemon;
+export default mongoose.model('Pokemon', pokemonSchema);
