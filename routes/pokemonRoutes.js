@@ -14,9 +14,9 @@ router.post('/pokemons', async (req, res) => {
 
   try {
     const pokemons = await Pokemon.find(query).sort({ id: order });
-    res.status(200).json({ length: pokemons.length, pokemons });
+    return res.status(200).json({ length: pokemons.length, pokemons });
   } catch (err) {
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 });
 
@@ -24,20 +24,23 @@ router.get('/pokedex/:gen', async (req, res) => {
   const gen = req.params.gen;
   try {
     const pokemon = await Pokemon.find({ gen });
-    res.status(200).json(pokemon);
+    return res.status(200).json(pokemon);
   } catch (err) {
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 });
 
-router.get('/pokemon/:id', async (req, res) => {
-  const id = req.params.id;  
+router.get('/pokemon', async (req, res) => {
+  const { name, id } = req.query;
+  let pokemon;
   try {
-    const pokemon = await Pokemon.findOne({ id });
-    if (!pokemon) res.status(422).json({ msg: 'Pokemon not found' });     
-    else res.status(200).json(pokemon);
+    if (name) pokemon = await Pokemon.findOne({ name: name.charAt(0).toUpperCase() + name.slice(1) });
+    else if (id) pokemon = await Pokemon.findOne({ id });
+
+    if (!pokemon) return res.status(422).json({ msg: 'Pokemon not found' });     
+    return res.status(200).json(pokemon);
   } catch (err) {
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 });
 
@@ -47,9 +50,9 @@ router.get('/pokemon/:id', async (req, res) => {
 
 //   try {
 //     await Pokemon.create(pokemon);
-//     res.status(201).json({ msg: 'Pokemon successfully added' });
+//     return res.status(201).json({ msg: 'Pokemon successfully added' });
 //   } catch (err) {
-//     res.status(500).json({ error: err });
+//     return res.status(500).json({ error: err });
 //   }
 // });
 
@@ -57,9 +60,9 @@ router.get('/pokemon/:id', async (req, res) => {
 //   const { id, entry } = req.body;
 //   try {
 //     await Pokemon.updateOne({ id }, { entry });
-//     res.status(201).json({ msg: 'Pokemon successfully updated' });
+//     return res.status(201).json({ msg: 'Pokemon successfully updated' });
 //   } catch (err) {
-//     res.status(500).json({ error: err });
+//     return res.status(500).json({ error: err });
 //   }
 // });
 
@@ -67,9 +70,9 @@ router.get('/pokemon/:id', async (req, res) => {
 //   const id = req.params.id;
 //   try {
 //     await Pokemon.deleteOne({ id });
-//     res.status(201).json({ msg: 'Pokemon successfully deleted' });
+//     return res.status(201).json({ msg: 'Pokemon successfully deleted' });
 //   } catch (err) {
-//     res.status(500).json({ error: err });
+//     return res.status(500).json({ error: err });
 //   }
 // });
 
