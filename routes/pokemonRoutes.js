@@ -6,10 +6,13 @@ const router = express.Router();
 router.post('/pokemons', async (req, res) => { 
   let query = {}; 
 
-  const { name, order, gen, type } = req.body;
+  const { name, order, gen, types } = req.body;
 
   if (name) query.name = { $regex: new RegExp(name.trim(), "i") };
-  if (type != 'All') query.types = { $elemMatch: { "type.name": type  } };
+  if (!types.includes('All')) {
+    if (types.length == 1) query.types = { $elemMatch: { "type.name": types[0] } };
+    else query.$and = [{ types: { $elemMatch: { "type.name": types[0] } } }, { types: { $elemMatch: { "type.name": types[1] } } }];
+  }
   if (gen != 'All') query.gen = gen;
 
   try {
