@@ -40,7 +40,7 @@ router.get('/pokemon', async (req, res) => {
     if (name) pokemon = await Pokemon.findOne({ name: name.charAt(0).toUpperCase() + name.slice(1) });
     else if (id) pokemon = await Pokemon.findOne({ id });
 
-    if (!pokemon) return res.status(422).json({ msg: 'Pokemon not found' });     
+    if (!pokemon) return res.status(404).json({ msg: 'Pokemon not found' });     
     return res.status(200).json(pokemon);
   } catch (err) {
     return res.status(500).json({ error: err });
