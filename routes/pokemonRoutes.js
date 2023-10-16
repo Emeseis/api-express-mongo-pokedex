@@ -37,7 +37,7 @@ router.get('/pokemon', async (req, res) => {
   const { name, id } = req.query;
   let pokemon;
   try {
-    if (name) pokemon = await Pokemon.findOne({ name: name.charAt(0).toUpperCase() + name.slice(1) });
+    if (name) pokemon = await Pokemon.findOne({ name });
     else if (id) pokemon = await Pokemon.findOne({ id });
 
     if (!pokemon) return res.status(404).json({ msg: 'Pokemon not found' });     
