@@ -3,19 +3,16 @@ import Type from '../models/Type.js';
 
 const router = express.Router();
 
-router.get('/types', async (req, res) => {
+router.get('/getTypes', async (req, res) => {
   try {
     const types = await Type.find();
-
     let newTypes = {};
-    
     for await (let type of types) {
       newTypes[type.name] = {
         attack: type.attack,
         defense: type.defense
       };
     }
-
     res.status(200).json(newTypes);
   } catch (err) {
     res.status(500).json({ error: err });
