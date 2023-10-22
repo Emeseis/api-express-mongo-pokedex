@@ -1,14 +1,21 @@
 import mongoose from 'mongoose';
 
-const pokemonSchema = new mongoose.Schema({
-  abilities: Array,
-  id: Number,
+export const pokemonSchema = new mongoose.Schema({
+  abilities: [{
+    ability: {
+      name: String,
+      url: String
+    },
+    is_hidden: Boolean,
+    slot: Number
+  }],
   entry: String,
-  name: String,
+  gen: Number,
+  id: Number,
   label: String,
+  name: String,
   sprite: String,
-  types: Array,
-  gen: Number
+  types: Array
 });
 
 export default mongoose.model('Pokemon', pokemonSchema);
